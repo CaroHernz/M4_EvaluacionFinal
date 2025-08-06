@@ -35,10 +35,6 @@
                             <a href="#contacto" class="nav-link">Contacto</a>
                         </li>
                     </ul>
-                    <div class="d-flex">
-                      <a href="#" class="btn btn-outline-light me-2">Login</a>
-                      <a href="#" class="btn btn-light">Registro</a>
-                    </div>
                 </div>
             </div>
         </nav>        
@@ -124,14 +120,66 @@
             </div>
         </div>
     </section>
+    <!-- Catálogo -->
+    <section id="catalogo" class="tecno__productos py-5 bg-light">
+        <div class="text-center mb-5 tecno__section-title">
+            <h3>Nuestro Catálogo</h3>
+          </div>
+        <div class="container mt-4">
+            <h2 class="text-center">Búsqueda de Productos</h2>
+            <input type="text" name="" id="filtroProductos" class="form-control" placeholder="Buscar productos...">
+            <section id="catalogo_productos" class="row cards d-flex my-3 justify-content-evenly"></section>
+        <div class="container my-5">
+          
+          
+           
+        </div>   
+    
+        </div>
+      </section>
+    <!-- Carrito -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Carrito de Compras</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul id="listCarrito"></ul>
+            <h5>Total: <span id="totalCarrito">$0.00</span></h5>
+            <button id="vaciarCarrito">Vaciar Carrito</button>
+        </div>
+    </div>
 
-    <!-- Contacto Section -->
+    <section class="carrito container" id="seccion-carrito">
+        <h3 class="text-center">Carrito</h3>
+        <div id="carrito-items">
+          <table class="table" id="tabla-carrito">
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Total</th>
+                <th scope="col">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+        
+        <div class= "mt-5"><h3>Resumen de compra</h3></div>
+        <div id="carrito-summary"></div>
+
+    </section>
+    <!-- Contacto  -->
     <section id="contacto" class="tecno__contact py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h2 class="tecno__section-title mb-4">¿Listo para transformar tu negocio?</h2>
-                    <p class="lead">Déjanos tus datos y nos pondremos en contacto contigo en menos de 24 horas.</p>
+                    <h2 class="tecno__section-title mb-4">¿Necesitas ayuda?</h2>
+                    <p class="lead">Déjanos tus datos, envíanos tus consultas y nos pondremos en contacto contigo en menos de 24 horas.</p>
                     
                     <form class="tecno__contact-form">
                         <div class="mb-3">
@@ -147,10 +195,10 @@
                             <input type="tel" class="form-control" id="telefono">
                         </div>
                         <div class="mb-3">
-                            <label for="mensaje" class="form-label">Cuéntanos sobre tu proyecto</label>
+                            <label for="mensaje" class="form-label">Escríbenos tus dudas o comentarios</label>
                             <textarea class="form-control" id="mensaje" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg">Solicitar Consultoría</button>
+                        <button type="button" class="btn btn-primary btn-lg">Enviar</button>
                     </form>
                 </div>
                 <div class="col-lg-6">
@@ -205,19 +253,18 @@
     <footer class="tecno__footer bg-dark text-white py-4">
       <div class="container text-center">
           <div class="row g-4">
-              <div class="col-lg-4">
+              <div class="col">
                   <h3><i class="fas fa-laptop-code me-2"></i>Tecno Chile</h3>              
                   <p>Especialistas en desarrollo de plataformas de comercio electrónico para empresas innovadoras.</p>
-                  <p class="small">© 2025 Tecno Chile. Todos los derechos reservados.</p>
                   <div class="tecno__social">
                     <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                    </div>
+                  <p class="small py-3">© 2025 Tecno Chile. Todos los derechos reservados.</p>
               </div>
-              
-              
+
           </div>
       </div>
   </footer>

@@ -11,5 +11,77 @@ const productos = [
     { id: 10, imagen: './assets/images/product10.jpeg', nombre: "Cafetera Smart WiFi", descripcion: "Prepara café desde tu app. Molinillo integrado y 6 perfiles de bebidas.", precio: 179990 },
     { id: 11, imagen: './assets/images/product11.jpeg', nombre: "SSD Externo 2TB USB-C", descripcion: "1050MB/s, resistente a golpes y agua. Ideal para gamers y creadores de contenido.", precio: 89990 },
     { id: 12, imagen: './assets/images/product12.jpeg', nombre: "Mouse Gaming Pro RGB", descripcion: "16.000 DPI, 8 botones programables, iluminación RGB personalizable y diseño ergonómico para gaming prolongado.", precio: 49990 }
-  ];
+];
+  
+let carrito = [];
+let carritoItems = null;
+
+const carritoSummary = document.getElementById('carrito-summary');
+
+function mostrarProductos(productos){
+  const productList = document.getElementById('catalogo_productos');
+  carritoItems = document.getElementById('carrito-items')
+  
+  if (!productList) {
+      console.error('No se encontró #catalogo_productos');
+      return;
+    }
+  
+    if (!carritoItems) {
+      console.error('No se encontró #carrito-items');
+      return;
+    }
+    if (productList) {
+      productos.forEach(producto => {
+        const col = document.createElement('div');
+        col.className = 'col-sm-12 col-md-4 mb-4';
+        col.innerHTML = `
+                  <div class="card h-100">
+                      <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                      <div class="card-body">
+                          <h5 class="card-title">${producto.nombre}</h5>
+                          <p class="card-text">${producto.descripcion}</p>
+                          <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
+                      </div>
+                      <div class="card-footer bg-white border-0">
+                          <!-- Línea 1: checkbox y label -->
+                          <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input border-dark" id="chk-${producto.id}">
+                            <label class="form-check-label" for="chk-${producto.id}">Cantidad</label>
+                          </div>
+                          
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="input-group" style="width: 9.7rem;">
+                              <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
+                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="1" min="1">
+                              <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
+                            </div>
+                            <button class="btn btn-primary" onclick="agregaCarrito('${producto.id}')" data-id="${producto.id}">Agregar</button>
+                          </div>
+                        </div>
+                  </div>
+              `;
+        productList.appendChild(col);
+      });
+    }
+  };
+mostrarProductos(productos);
+
+// offcanvas
+const btnCarrito = document.getElementById("btnCarrito");
+const offcanvascarrito = new bootstrap.Offcanvas(document.getElementById("offcanvasCarrito"));
+btnCarrito.addEventListener("click", () => {
+    offcanvascarrito.toggle();
+});
+//filtro
+const filtroProductos = document.getElementById("filtroProductos");
+if (filtroProductos) {
+    filtroProductos.addEventListener("input", (e) => {
+        const productosFiltrados = productos.filter(producto => {
+            return producto.nombre.toLowerCase().includes(e.target.value.toLowerCase())
+        });
+        mostrarProductos(productosFiltrados);
+    });
+}
+
   
