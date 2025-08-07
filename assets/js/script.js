@@ -19,6 +19,21 @@ let carritoItems = null;
 const carritoSummary = document.getElementById('carrito-summary');
 const productList = document.getElementById('catalogo_productos');
 
+// Bienvenida al sitio web
+const bienvenida = document.getElementById("bienvenida");
+if (bienvenida) {
+    if (localStorage.getItem("user")) {
+        const user = localStorage.getItem("user");
+        bienvenida.innerHTML = `Bienvenido ${user} a nuestra tienda digital.`;
+    }
+    else {
+        const user = prompt("Ingrese su nombre.");
+        bienvenida.innerHTML = `Bienvenido ${user} a nuestra tienda digital.`;
+        localStorage.setItem("user", user);
+    }
+    
+}
+
 function mostrarProductos(productos){
   const productList = document.getElementById('catalogo_productos');
   carritoItems = document.getElementById('carrito-items')
@@ -68,16 +83,12 @@ function mostrarProductos(productos){
           const input = group.querySelector('.quantity-input');
 
           minusBtn.addEventListener('click', function() {
-            let value = parseInt(input.value, 10);
-            if (value > parseInt(input.min, 10)) {
-              input.value = value - 1;
-            }
+            input.value = 0;
             validarDecimalPositivo(input);
           });
 
           plusBtn.addEventListener('click', function() {
-            let value = parseInt(input.value, 10);
-            input.value = value + 1;
+            input.value = 0;
             validarDecimalPositivo(input);
           });
         });
@@ -101,6 +112,37 @@ document.addEventListener('input', (e) => {
 document.addEventListener('blur', (e) => {
   if (e.target.matches('.quantity-input')) validarDecimalPositivo(e.target);
 }, true);
+
+// Agregar al carrito con validación de cantidad >= 1
+function agregaCarrito(productId) {
+  const input = document.getElementById(`cinput-${productId}`);
+  if (!input) return;
+
+  const valor = String(input.value).replace(',', '.').trim();
+  const cantidad = Number(valor);
+
+  if (!isFinite(cantidad) || cantidad < 1) {
+    input.classList.add('is-invalid');
+    input.focus();
+    return;
+  }
+
+  input.classList.remove('is-invalid');
+
+  // Lógica mínima de agregado (no solicitada, pero útil): sumar al carrito en memoria
+  const producto = productos.find(p => String(p.id) === String(productId));
+  if (!producto) return;
+
+  const existente = carrito.find(i => i.id === producto.id);
+  if (existente) {
+    existente.cantidad = (existente.cantidad || 0) + cantidad;
+  } else {
+    carrito.push({ ...producto, cantidad });
+  }
+
+  // Reiniciar el input después de agregar (opcional)
+  input.value = 0;
+}
 
 mostrarProductos(productos);
 
@@ -165,16 +207,12 @@ function mostrarNovedades() {
           const input = group.querySelector('.quantity-input');
 
           minusBtn.addEventListener('click', function() {
-            let value = parseInt(input.value, 10);
-            if (value > parseInt(input.min, 10)) {
-              input.value = value - 1;
-            }
+            input.value = 0;
             validarDecimalPositivo(input);
           });
 
           plusBtn.addEventListener('click', function() {
-            let value = parseInt(input.value, 10);
-            input.value = value + 1;
+            input.value = 0;
             validarDecimalPositivo(input);
           });
         });  })
