@@ -108,4 +108,39 @@ btnCarrito.addEventListener("click", () => {
     offcanvascarrito.toggle();
 });
 
-  
+// novedades
+function mostrarNovedades() {
+  const novedadesProductos = document.getElementById('novedades_productos');
+  const ultimosProductos = productos.slice(-3);
+  novedadesProductos.innerHTML='';
+  ultimosProductos.forEach(producto => {
+    const col = document.createElement('div');
+    col.className = 'col-sm-12 col-md-4 mb-4';
+    col.innerHTML = `
+              <div class="card h-100">
+                  <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                  <div class="card-body">
+                      <h5 class="card-title">${producto.nombre}</h5>
+                      <p class="card-text">${producto.descripcion}</p>
+                      
+                  </div>
+                  <div class="card-footer bg-white border-0">
+                      <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
+                      
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="input-group" style="width: 9.7rem;">
+                          <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
+                          <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="1" min="1">
+                          <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
+                        </div>
+                        <button type="button" class="btn btn-primary" >Ver más</button>
+                        </div>
+                    </div>
+              </div>
+          `;
+    novedadesProductos.appendChild(col);  })
+}
+document.addEventListener('DOMContentLoaded', (event) => {
+  mostrarProductos(productos);
+  mostrarNovedades(); 
+});
