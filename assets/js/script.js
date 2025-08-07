@@ -17,6 +17,7 @@ let carrito = [];
 let carritoItems = null;
 
 const carritoSummary = document.getElementById('carrito-summary');
+const productList = document.getElementById('catalogo_productos');
 
 function mostrarProductos(productos){
   const productList = document.getElementById('catalogo_productos');
@@ -32,6 +33,7 @@ function mostrarProductos(productos){
       return;
     }
     if (productList) {
+      productList.innerHTML = '';
       productos.forEach(producto => {
         const col = document.createElement('div');
         col.className = 'col-sm-12 col-md-4 mb-4';
@@ -49,15 +51,16 @@ function mostrarProductos(productos){
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="input-group" style="width: 9.7rem;">
                               <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
-                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="1" min="1">
+                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="any">
                               <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
                             </div>
-                            <button class="btn btn-primary" onclick="agregaCarrito('${producto.id}')" data-id="${producto.id}">Agregar</button>
-                          </div>
+                            <button type="button" class="btn btn-primary" onclick="agregaCarrito('${producto.id}')" data-id="${producto.id}" data-toggle="tooltip" data-placement="top" title="Añadir al carrito">Agregar</button>
+                            </div>
                         </div>
                   </div>
               `;
         productList.appendChild(col);
+
         // Selecciona todos los grupos de cantidad dentro de este producto
         col.querySelectorAll('.input-group').forEach(function(group) {
           const minusBtn = group.querySelector('.minus-btn');
@@ -69,24 +72,38 @@ function mostrarProductos(productos){
             if (value > parseInt(input.min, 10)) {
               input.value = value - 1;
             }
+            validarDecimalPositivo(input);
           });
 
           plusBtn.addEventListener('click', function() {
             let value = parseInt(input.value, 10);
             input.value = value + 1;
+            validarDecimalPositivo(input);
           });
         });
       });
     }
   };
+// Validar input de cantidad
+function validarDecimalPositivo(inputEl) {
+  const valor = String(inputEl.value).replace(',', '.').trim();
+  const num = Number(valor);
+  const minValue = inputEl.min !== '' ? Number(inputEl.min) : 0;
+  const esValido = valor !== '' && isFinite(num) && num >= minValue;
+  inputEl.classList.toggle('is-invalid', !esValido);
+  return esValido;
+}
+
+// Validar mientras se escribe y al salir del campo
+document.addEventListener('input', (e) => {
+  if (e.target.matches('.quantity-input')) validarDecimalPositivo(e.target);
+});
+document.addEventListener('blur', (e) => {
+  if (e.target.matches('.quantity-input')) validarDecimalPositivo(e.target);
+}, true);
+
 mostrarProductos(productos);
 
-// offcanvas
-const btnCarrito = document.getElementById("btnCarrito");
-const offcanvascarrito = new bootstrap.Offcanvas(document.getElementById("offcanvasCarrito"));
-btnCarrito.addEventListener("click", () => {
-    offcanvascarrito.toggle();
-});
 //filtro
 const filtroProductos = document.getElementById("filtroProductos");
 if (filtroProductos) {
@@ -98,5 +115,71 @@ if (filtroProductos) {
     });
 }
 
+//tooltip
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
-  
+// offcanvas
+const btnCarrito = document.getElementById("btnCarrito");
+const offcanvascarrito = new bootstrap.Offcanvas(document.getElementById("offcanvasCarrito"));
+btnCarrito.addEventListener("click", () => {
+    offcanvascarrito.toggle();
+});
+
+// novedades
+function mostrarNovedades() {
+  const novedadesProductos = document.getElementById('novedades_productos');
+  const ultimosProductos = productos.slice(-3);
+  novedadesProductos.innerHTML='';
+  ultimosProductos.forEach(producto => {
+    const col = document.createElement('div');
+    col.className = 'col-sm-12 col-md-4 mb-4';
+    col.innerHTML = `
+              <div class="card h-100">
+                  <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                  <div class="card-body">
+                      <h5 class="card-title">${producto.nombre}</h5>
+                      <p class="card-text">${producto.descripcion}</p>
+                      
+                  </div>
+                  <div class="card-footer bg-white border-0">
+                      <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
+                      
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="input-group" style="width: 9.7rem;">
+                          <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
+                          <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="any">
+                          <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
+                        </div>
+                        <button type="button" class="btn btn-primary" >Ver más</button>
+                        </div>
+                    </div>
+              </div>
+          `;
+    novedadesProductos.appendChild(col);
+        col.querySelectorAll('.input-group').forEach(function(group) {
+          const minusBtn = group.querySelector('.minus-btn');
+          const plusBtn = group.querySelector('.plus-btn');
+          const input = group.querySelector('.quantity-input');
+
+          minusBtn.addEventListener('click', function() {
+            let value = parseInt(input.value, 10);
+            if (value > parseInt(input.min, 10)) {
+              input.value = value - 1;
+            }
+            validarDecimalPositivo(input);
+          });
+
+          plusBtn.addEventListener('click', function() {
+            let value = parseInt(input.value, 10);
+            input.value = value + 1;
+            validarDecimalPositivo(input);
+          });
+        });  })
+}
+document.addEventListener('DOMContentLoaded', (event) => {
+  mostrarProductos(productos);
+  mostrarNovedades(); 
+});
