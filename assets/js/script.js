@@ -41,14 +41,10 @@ function mostrarProductos(productos){
                       <div class="card-body">
                           <h5 class="card-title">${producto.nombre}</h5>
                           <p class="card-text">${producto.descripcion}</p>
-                          <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
+                          
                       </div>
                       <div class="card-footer bg-white border-0">
-                          <!-- Línea 1: checkbox y label -->
-                          <div class="form-check mb-2">
-                            <input type="checkbox" class="form-check-input border-dark" id="chk-${producto.id}">
-                            <label class="form-check-label" for="chk-${producto.id}">Cantidad</label>
-                          </div>
+                          <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
                           
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="input-group" style="width: 9.7rem;">
@@ -62,6 +58,24 @@ function mostrarProductos(productos){
                   </div>
               `;
         productList.appendChild(col);
+        // Selecciona todos los grupos de cantidad dentro de este producto
+        col.querySelectorAll('.input-group').forEach(function(group) {
+          const minusBtn = group.querySelector('.minus-btn');
+          const plusBtn = group.querySelector('.plus-btn');
+          const input = group.querySelector('.quantity-input');
+
+          minusBtn.addEventListener('click', function() {
+            let value = parseInt(input.value, 10);
+            if (value > parseInt(input.min, 10)) {
+              input.value = value - 1;
+            }
+          });
+
+          plusBtn.addEventListener('click', function() {
+            let value = parseInt(input.value, 10);
+            input.value = value + 1;
+          });
+        });
       });
     }
   };
@@ -83,5 +97,6 @@ if (filtroProductos) {
         mostrarProductos(productosFiltrados);
     });
 }
+
 
   
