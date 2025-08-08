@@ -83,12 +83,18 @@ function mostrarProductos(productos){
           const input = group.querySelector('.quantity-input');
 
           minusBtn.addEventListener('click', function() {
-            input.value = 0;
+            const step = (input.step && input.step !== 'any') ? Number(input.step) : 1;
+            const min = input.min !== '' ? Number(input.min) : 0;
+            const current = isFinite(Number(input.value)) ? Number(input.value) : 0;
+            const next = Math.max(min, current - step);
+            input.value = next;
             validarDecimalPositivo(input);
           });
 
           plusBtn.addEventListener('click', function() {
-            input.value = 0;
+            const step = (input.step && input.step !== 'any') ? Number(input.step) : 1;
+            const current = isFinite(Number(input.value)) ? Number(input.value) : 0;
+            input.value = current + step;
             validarDecimalPositivo(input);
           });
         });
@@ -207,12 +213,18 @@ function mostrarNovedades() {
           const input = group.querySelector('.quantity-input');
 
           minusBtn.addEventListener('click', function() {
-            input.value = 0;
+            const step = (input.step && input.step !== 'any') ? Number(input.step) : 1;
+            const min = input.min !== '' ? Number(input.min) : 0;
+            const current = isFinite(Number(input.value)) ? Number(input.value) : 0;
+            const next = Math.max(min, current - step);
+            input.value = next;
             validarDecimalPositivo(input);
           });
 
           plusBtn.addEventListener('click', function() {
-            input.value = 0;
+            const step = (input.step && input.step !== 'any') ? Number(input.step) : 1;
+            const current = isFinite(Number(input.value)) ? Number(input.value) : 0;
+            input.value = current + step;
             validarDecimalPositivo(input);
           });
         });  })
