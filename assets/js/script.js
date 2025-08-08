@@ -33,7 +33,47 @@ if (bienvenida) {
     }
     
 }
+//Productos en Novedades
+const novProductos = document.getElementById('novedades_productos');
 
+function novedadesProductos(productos){
+  const novProductos = document.getElementById('novedades_productos');
+  
+  if (!novProductos) {
+      console.error('No se encontró #novedades_productos');
+      return;
+    }
+  
+    if (novProductos) {
+      novProductos.innerHTML = '';
+      const ultimosProductos = productos.slice(-3);
+      ultimosProductos.forEach(producto => {
+        const col = document.createElement('div');
+        col.className = 'col-sm-12 col-md-4 mb-4';
+        col.innerHTML = `
+                  <div class="card h-100">
+                      <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                      <div class="card-body">
+                          <h5 class="card-title">${producto.nombre}</h5>
+                          <p class="card-text">${producto.descripcion}</p>
+                          
+                      </div>
+                      <div class="card-footer bg-white border-0">
+                          <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
+                          
+                          <div class="d-flex justify-content-end align-items-center">
+                          <a href="productos.html?id=${producto.id}" class="btn btn-outline-primary">Ver más...</a>
+                            </div>
+                        </div>
+                  </div>
+              `;
+        novProductos.appendChild(col);        
+      });
+    }
+  };
+novedadesProductos(productos);
+
+// Card para Productos
 function mostrarProductos(productos){
   const productList = document.getElementById('catalogo_productos');
   carritoItems = document.getElementById('carrito-items')
@@ -174,62 +214,4 @@ const btnCarrito = document.getElementById("btnCarrito");
 const offcanvascarrito = new bootstrap.Offcanvas(document.getElementById("offcanvasCarrito"));
 btnCarrito.addEventListener("click", () => {
     offcanvascarrito.toggle();
-});
-
-// novedades
-function mostrarNovedades() {
-  const novedadesProductos = document.getElementById('novedades_productos');
-  const ultimosProductos = productos.slice(-3);
-  novedadesProductos.innerHTML='';
-  ultimosProductos.forEach(producto => {
-    const col = document.createElement('div');
-    col.className = 'col-sm-12 col-md-4 mb-4';
-    col.innerHTML = `
-              <div class="card h-100">
-                  <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
-                  <div class="card-body">
-                      <h5 class="card-title">${producto.nombre}</h5>
-                      <p class="card-text">${producto.descripcion}</p>
-                      
-                  </div>
-                  <div class="card-footer bg-white border-0">
-                      <h4 class="text-primary mt-3">$${producto.precio.toLocaleString('es-CL')}</h4>
-                      
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="input-group" style="width: 9.7rem;">
-                          <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
-                          <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="any">
-                          <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
-                        </div>
-                        <button type="button" class="btn btn-primary" >Ver más</button>
-                        </div>
-                    </div>
-              </div>
-          `;
-    novedadesProductos.appendChild(col);
-        col.querySelectorAll('.input-group').forEach(function(group) {
-          const minusBtn = group.querySelector('.minus-btn');
-          const plusBtn = group.querySelector('.plus-btn');
-          const input = group.querySelector('.quantity-input');
-
-          minusBtn.addEventListener('click', function() {
-            const step = (input.step && input.step !== 'any') ? Number(input.step) : 1;
-            const min = input.min !== '' ? Number(input.min) : 0;
-            const current = isFinite(Number(input.value)) ? Number(input.value) : 0;
-            const next = Math.max(min, current - step);
-            input.value = next;
-            validarDecimalPositivo(input);
-          });
-
-          plusBtn.addEventListener('click', function() {
-            const step = (input.step && input.step !== 'any') ? Number(input.step) : 1;
-            const current = isFinite(Number(input.value)) ? Number(input.value) : 0;
-            input.value = current + step;
-            validarDecimalPositivo(input);
-          });
-        });  })
-}
-document.addEventListener('DOMContentLoaded', (event) => {
-  mostrarProductos(productos);
-  mostrarNovedades(); 
 });
