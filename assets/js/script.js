@@ -19,6 +19,21 @@ let carritoItems = null;
 const carritoSummary = document.getElementById('carrito-summary');
 const productList = document.getElementById('catalogo_productos');
 
+// Bienvenida al sitio web
+const bienvenida = document.getElementById("bienvenida");
+if (bienvenida) {
+    if (localStorage.getItem("user")) {
+        const user = localStorage.getItem("user");
+        bienvenida.innerHTML = `Bienvenido ${user} a nuestra tienda digital.`;
+    }
+    else {
+        const user = prompt("Ingrese su nombre.");
+        bienvenida.innerHTML = `Bienvenido ${user} a nuestra tienda digital.`;
+        localStorage.setItem("user", user);
+    }
+    
+}
+
 function mostrarProductos(productos){
   const productList = document.getElementById('catalogo_productos');
   carritoItems = document.getElementById('carrito-items')
@@ -51,7 +66,7 @@ function mostrarProductos(productos){
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="input-group" style="width: 9.7rem;">
                               <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
-                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="1" min="1">
+                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="any">
                               <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="agregaCarrito('${producto.id}')" data-id="${producto.id}" data-toggle="tooltip" data-placement="top" title="Añadir al carrito">Agregar</button>
@@ -68,20 +83,67 @@ function mostrarProductos(productos){
           const input = group.querySelector('.quantity-input');
 
           minusBtn.addEventListener('click', function() {
-            let value = parseInt(input.value, 10);
-            if (value > parseInt(input.min, 10)) {
-              input.value = value - 1;
-            }
+            input.value = 0;
+            validarDecimalPositivo(input);
           });
 
           plusBtn.addEventListener('click', function() {
-            let value = parseInt(input.value, 10);
-            input.value = value + 1;
+            input.value = 0;
+            validarDecimalPositivo(input);
           });
         });
       });
     }
   };
+// Validar input de cantidad
+function validarDecimalPositivo(inputEl) {
+  const valor = String(inputEl.value).replace(',', '.').trim();
+  const num = Number(valor);
+  const minValue = inputEl.min !== '' ? Number(inputEl.min) : 0;
+  const esValido = valor !== '' && isFinite(num) && num >= minValue;
+  inputEl.classList.toggle('is-invalid', !esValido);
+  return esValido;
+}
+
+// Validar mientras se escribe y al salir del campo
+document.addEventListener('input', (e) => {
+  if (e.target.matches('.quantity-input')) validarDecimalPositivo(e.target);
+});
+document.addEventListener('blur', (e) => {
+  if (e.target.matches('.quantity-input')) validarDecimalPositivo(e.target);
+}, true);
+
+// Agregar al carrito con validación de cantidad >= 1
+function agregaCarrito(productId) {
+  const input = document.getElementById(`cinput-${productId}`);
+  if (!input) return;
+
+  const valor = String(input.value).replace(',', '.').trim();
+  const cantidad = Number(valor);
+
+  if (!isFinite(cantidad) || cantidad < 1) {
+    input.classList.add('is-invalid');
+    input.focus();
+    return;
+  }
+
+  input.classList.remove('is-invalid');
+
+  // Lógica mínima de agregado (no solicitada, pero útil): sumar al carrito en memoria
+  const producto = productos.find(p => String(p.id) === String(productId));
+  if (!producto) return;
+
+  const existente = carrito.find(i => i.id === producto.id);
+  if (existente) {
+    existente.cantidad = (existente.cantidad || 0) + cantidad;
+  } else {
+    carrito.push({ ...producto, cantidad });
+  }
+
+  // Reiniciar el input después de agregar (opcional)
+  input.value = 0;
+}
+
 mostrarProductos(productos);
 
 //filtro
@@ -130,7 +192,7 @@ function mostrarNovedades() {
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="input-group" style="width: 9.7rem;">
                           <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
-                          <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="1" min="1">
+                          <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="any">
                           <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
                         </div>
                         <button type="button" class="btn btn-primary" >Ver más</button>
@@ -138,7 +200,22 @@ function mostrarNovedades() {
                     </div>
               </div>
           `;
-    novedadesProductos.appendChild(col);  })
+    novedadesProductos.appendChild(col);
+        col.querySelectorAll('.input-group').forEach(function(group) {
+          const minusBtn = group.querySelector('.minus-btn');
+          const plusBtn = group.querySelector('.plus-btn');
+          const input = group.querySelector('.quantity-input');
+
+          minusBtn.addEventListener('click', function() {
+            input.value = 0;
+            validarDecimalPositivo(input);
+          });
+
+          plusBtn.addEventListener('click', function() {
+            input.value = 0;
+            validarDecimalPositivo(input);
+          });
+        });  })
 }
 document.addEventListener('DOMContentLoaded', (event) => {
   mostrarProductos(productos);
