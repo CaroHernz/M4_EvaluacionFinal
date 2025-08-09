@@ -8,7 +8,7 @@
     <title>Tecno Chile </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="" type="image/x-icon">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d='M64 160C64 124.7 92.7 96 128 96L512 96C547.3 96 576 124.7 576 160L576 400L512 400L512 160L128 160L128 400L64 400L64 160zM0 467.2C0 456.6 8.6 448 19.2 448L620.8 448C631.4 448 640 456.6 640 467.2C640 509.6 605.6 544 563.2 544L76.8 544C34.4 544 0 509.6 0 467.2zM281 273L250 304L281 335C290.4 344.4 290.4 359.6 281 368.9C271.6 378.2 256.4 378.3 247.1 368.9L199.1 320.9C189.7 311.5 189.7 296.3 199.1 287L247.1 239C256.5 229.6 271.7 229.6 281 239C290.3 248.4 290.4 263.6 281 272.9zM393 239L441 287C450.4 296.4 450.4 311.6 441 320.9L393 368.9C383.6 378.3 368.4 378.3 359.1 368.9C349.8 359.5 349.7 344.3 359.1 335L390.1 304L359.1 273C349.7 263.6 349.7 248.4 359.1 239.1C368.5 229.8 383.7 229.7 393 239.1z'/></svg>" type="image/svg+xml">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -39,6 +39,9 @@
                         </li>
                     </ul>
                     <div id="bienvenida" class="navbar-text ms-auto"></div>
+                    <div>
+                        <a href="#" id="btnCarrito" class="text-secondary"><i class="fa-solid fa-cart-shopping fa-2x ms-3 me-2"></i></a>
+                      </div>
                 </div>
             </div>
         </nav>
@@ -145,7 +148,7 @@
         <section id="contacto" class="tecno__contact py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <h2 class="tecno__section-title mb-4">¿Necesitas ayuda?</h2>
                         <p class="lead">Déjanos tus datos, envíanos tus consultas y nos pondremos en contacto contigo en
                             menos de 24 horas.</p>
@@ -170,62 +173,112 @@
                             <button type="button" class="btn btn-primary btn-lg">Enviar</button>
                         </form>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <div class="tecno__contact-info pt-5">
-                            <div class="row">
-                                <div class="info-item col-md-4">
-                                    <i class="fas fa-envelope fa-2x"></i>
-                                    <div>
-                                        <h4>Email</h4>
+                            <div class="row text-center">
+                                <div class="col-4 col-md-12">
+                                    <div class="info-item pb-5 mt-3">
+                                        <i class="fas fa-envelope fa-2x pb-2 d-block"></i>
+                                        <h4><strong>Email</strong></h4>
                                         <p>contacto@tecnochile.com</p>
                                     </div>
                                 </div>
-                                <div class="info-item col-md-4">
-                                    <i class="fas fa-phone fa-2x"></i>
-                                    <div>
-                                        <h4>Teléfono</h4>
+                                <div class="col-4 col-md-12">
+                                    <div class="info-item pb-5 my-3">
+                                        <i class="fas fa-phone fa-2x pb-2 d-block"></i>
+                                        <h4><strong>Teléfono</strong></h4>
                                         <p>+56 2 2345 6789</p>
                                     </div>
                                 </div>
-                                <div class="info-item col-md-4">
-                                    <i class="fas fa-map-marker-alt fa-2x"></i>
-                                    <div>
-                                        <h4>Oficina Central</h4>
+                                <div class="col-4 col-md-12">
+                                    <div class="info-item pb-5">
+                                        <i class="fas fa-map-marker-alt fa-2x pb-2 d-block"></i>
+                                        <h4><strong>Oficina Central</strong></h4>
                                         <p>Av. Apoquindo 4500, Las Condes, Santiago</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row  align-items-center justify-content-center">
-                                <div class="col-lg-12 col-md-6">
-                                    <h3 class="h5 mb-3">Suscríbete</h3>
-                                    <p>Recibe insights y tendencias de e-commerce directamente en tu correo.</p>
-                                    <div class="input-group mb-3">
-                                        <input type="email" class="form-control" placeholder="Tu correo electrónico">
-                                        <button class="btn btn-secondary" type="button">Suscribir</button>
-                                    </div>
-                                    <small class="text-muted">Al suscribirte aceptas nuestra Política de
-                                        Privacidad</small>
-                                </div>
-                                <div class="tecno__social-media col-md-6 col-lg-12 text-center pt-3">
-                                    <a href="#" class="btn btn-outline-secondary"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="btn btn-outline-secondary"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-outline-secondary"><i class="fab fa-instagram"></i></a>
-                                    <a href="#" class="btn btn-outline-secondary"><i class="fab fa-facebook"></i></a>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Suscripción -->
+        <section id="suscripcion" class="tecno__products py-5 bg-secondary bg-opacity-25">
+            <div class="container">
+                <div class="row  align-items-center justify-content-center">
+                    <div class="col-lg-12 col-md-6">
+                        <h3 class="h5 mb-3">Suscríbete</h3>
+                        <p>Recibe insights y tendencias de e-commerce directamente en tu correo.</p>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Tu correo electrónico">
+                            <button class="btn btn-secondary" type="button">Suscribir</button>
+                        </div>
+                        <small class="text-muted">Al suscribirte aceptas nuestra Política de
+                            Privacidad</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Carrito -->
+    <section class="offcanvas offcanvas-end bg-light" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header border-bottom mt-3" >
+            <h4 id="offcanvasRightLabel">Carrito de Compras</h4>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="seccion-carrito">
+          <div id="carrito-items">
+            <table class="table" id="tabla-carrito">
+              <thead>
+                <tr>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </div>
+          
+          <div class= "py-2 border-bottom"><h4>Resumen de compra</h4></div>
+          <div id="carrito-summary" class="mt-3"></div>
+        </div>
+        <div id="mensaje-carrito-vacio" class="alert text-center" style="display: none;">
+          <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+          <h4>Tu carrito está vacío</h4>
+          <p>Agrega productos para comenzar tu compra</p>
+          <a href="productos.html#productos" class="btn btn-primary">Ver catálogo</a>
+        </div>
+    </section>
+    <div class="modal fade" id="finalizarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabelTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongLabel">Compra finalizada</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body bg-light ">
+            ¡Tu compra ha finalizado con éxito!
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success"data-bs-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </main>
     <footer class="tecno__footer bg-dark text-white py-4">
         <div class="container text-center">
             <div class="row g-4">
                 <div class="col">
                     <h3><i class="fas fa-laptop-code me-2"></i>Tecno Chile</h3>
-                    <p>Especialistas en desarrollo de plataformas de comercio electrónico para empresas innovadoras.</p>
+                    <p>Especialistas en productos tecnológicos y comercio electrónico.</p>
                     <div class="tecno__social">
                         <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
