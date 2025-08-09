@@ -8,7 +8,7 @@
     <title>Tecno Chile </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d='M64 160C64 124.7 92.7 96 128 96L512 96C547.3 96 576 124.7 576 160L576 400L512 400L512 160L128 160L128 400L64 400L64 160zM0 467.2C0 456.6 8.6 448 19.2 448L620.8 448C631.4 448 640 456.6 640 467.2C640 509.6 605.6 544 563.2 544L76.8 544C34.4 544 0 509.6 0 467.2zM281 273L250 304L281 335C290.4 344.4 290.4 359.6 281 368.9C271.6 378.2 256.4 378.3 247.1 368.9L199.1 320.9C189.7 311.5 189.7 296.3 199.1 287L247.1 239C256.5 229.6 271.7 229.6 281 239C290.3 248.4 290.4 263.6 281 272.9zM393 239L441 287C450.4 296.4 450.4 311.6 441 320.9L393 368.9C383.6 378.3 368.4 378.3 359.1 368.9C349.8 359.5 349.7 344.3 359.1 335L390.1 304L359.1 273C349.7 263.6 349.7 248.4 359.1 239.1C368.5 229.8 383.7 229.7 393 239.1z'/></svg>" type="image/svg+xml">
+    <link rel="icon" href="./assets/images/laptop-solid-icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -40,7 +40,15 @@
                     </ul>
                     <div id="bienvenida" class="navbar-text ms-auto"></div>
                     <div>
-                      <a href="#" id="btnCarrito" class="text-secondary"><i class="fa-solid fa-cart-shopping fa-2x ms-3 me-2"></i></a>
+                      <a href="#" id="btnCarrito" class="position-relative text-secondary">
+                        <i class="fa-solid fa-cart-shopping fa-2x ms-3 me-2">
+                            
+                        </i>
+                        <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          <span>0</span>
+                          <span class="visually-hidden">Productos en carrito</span>
+                        </span>
+                    </a>
                     </div>
                 </div>
             </div>
@@ -99,6 +107,7 @@
             <table class="table" id="tabla-carrito">
               <thead>
                 <tr>
+                  <th scope="col">id</th>
                   <th scope="col">Cantidad</th>
                   <th scope="col">Producto</th>
                   <th scope="col">Precio</th>

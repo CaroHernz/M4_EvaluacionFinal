@@ -248,6 +248,7 @@ function renderCarrito(){
   const seccionCarrito = document.getElementById('seccion-carrito')
   const tabla = document.getElementById('tabla-carrito');
   const tbody = tabla.querySelector('tbody');
+  const contadorCarrito = document.getElementById('contador-carrito');
 
   if (!tabla) {
     console.error('Tabla del carrito no encontrada');
@@ -268,14 +269,15 @@ function renderCarrito(){
   carrito.forEach(item => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
-        <td>${item.cantidad}</td>
+        <td>${item.id}</td>
+        <td class="text-center">${item.cantidad}</td>
         <td>${item.nombre}</td>
         <td>$${(item.precio * item.cantidad).toLocaleString('es-CL')}</td>
         <td><button class="btn btn-danger" onclick="eliminarDelCarrito('${item.id}')"><i class="fa-solid fa-trash text-white"></i></button></td>
       `;
     tbody.appendChild(tr);
   });
-
+  // Totalizador
   const neto = carrito.reduce((sum, item) => sum + item.cantidad * item.precio, 0);
   const iva = Math.trunc(neto * 0.19);
   let bruto = neto + iva;
@@ -295,6 +297,22 @@ function renderCarrito(){
   localStorage.setItem('resumenCompra', JSON.stringify({
     neto,iva,bruto,despacho
   }));
+
+  //Contador carrito
+  const itemsCarrito = carrito.reduce((sum, item) => sum + item.cantidad,0);
+  if (contadorCarrito) {
+    if (itemsCarrito > 0) {
+      contadorCarrito.textContent = itemsCarrito;
+      contadorCarrito.style.display = 'flex';
+      if (itemsCarrito > 99){
+        contadorCarrito.textContent = '99+';
+      };
+    }
+    else {
+      contadorCarrito.style.display = 'none'
+    }
+  }
+
 }
 
 function eliminarDelCarrito(productId) {
