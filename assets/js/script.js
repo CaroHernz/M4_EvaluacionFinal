@@ -27,7 +27,7 @@ if (bienvenida) {
         bienvenida.innerHTML = `Bienvenido ${user} a nuestra tienda digital.`;
     }
     else {
-        const user = prompt("Ingrese su nombre.");
+        const user = prompt("Ingrese su nombre y apellido.");
         bienvenida.innerHTML = `Bienvenido ${user} a nuestra tienda digital.`;
         localStorage.setItem("user", user);
     }
@@ -141,7 +141,7 @@ function mostrarProductos(productos){
       });
     }
   };
-// Validar input de cantidad
+// Validar input de cantidad para que no se pueda ingresar un numero negativo u otro caracter
 function validarDecimalPositivo(inputEl) {
   const valor = String(inputEl.value).replace(',', '.').trim();
   const num = Number(valor);
@@ -279,7 +279,7 @@ function renderCarrito(){
   const neto = carrito.reduce((sum, item) => sum + item.cantidad * item.precio, 0);
   const iva = Math.trunc(neto * 0.19);
   let bruto = neto + iva;
-  const despacho = bruto < 100000 ? bruto * 0.05 : 0;
+  const despacho = bruto < 100000 ? Math.trunc(bruto * 0.05) : 0;
   bruto += despacho;
 
   carritoSummary.innerHTML = `<p><strong>Valor Neto:</strong> $${neto.toLocaleString('es-CL')}</p>
