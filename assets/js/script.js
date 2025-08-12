@@ -106,7 +106,7 @@ function mostrarProductos(productos){
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="input-group" style="width: 9.7rem;">
                               <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
-                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="any">
+                              <input type="number" class="form-control text-center quantity-input" id="cinput-${producto.id}" value="0" min="0" step="1">
                               <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="agregaCarrito('${producto.id}')" data-id="${producto.id}" data-toggle="tooltip" data-placement="top" title="Añadir al carrito">Agregar</button>
@@ -146,7 +146,8 @@ function validarDecimalPositivo(inputEl) {
   const valor = String(inputEl.value).replace(',', '.').trim();
   const num = Number(valor);
   const minValue = inputEl.min !== '' ? Number(inputEl.min) : 0;
-  const esValido = valor !== '' && isFinite(num) && num >= minValue;
+  const esEntero = Number.isInteger(num);
+  const esValido = valor !== '' && isFinite(num) && esEntero && num >= minValue;
   inputEl.classList.toggle('is-invalid', !esValido);
   return esValido;
 }
@@ -196,7 +197,7 @@ function agregaCarrito(productId) {
   const valor = String(cantidadProducto.value).replace(',', '.').trim();
   const cantidad = Number(valor);
 
-  if (!isFinite(cantidad) || cantidad < 1) {
+  if (!isFinite(cantidad) || !Number.isInteger(cantidad) || cantidad < 1) {
     cantidadProducto.classList.add('is-invalid');
     cantidadProducto.focus();
     return;
